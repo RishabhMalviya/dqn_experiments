@@ -1,8 +1,15 @@
 # Overview
-This repository contains an implementation of DQNs, with a number of additional tricks that have been propsed since then (see Biobliography). I have applied these DQNs to various OpenAI Gym environments. Each in it's own environment.
+This repository contains an implementation of DQNs, with a number of additional tricks that have been propsed since then (see Biobliography). I have applied these DQNs to various OpenAI Gym environments.
 
 # Results
 These are the results (before and after GIFs) for the experiments that I have run. Corresponding entries to the OpenAI leaderboards are also linked to.
+
+## LunarLander-v2
+### Random Agent:
+![lunarlander-random-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/random_agent.gif)
+### Trained Agent:
+![lunarlander-trained-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/trained_agent.gif)
+
 
 # Local Setup
 This setup was done on a system with these specifications:
@@ -23,3 +30,47 @@ Here are the exact steps:
 5. Upgrade pip with `pip install -U pip`.
 6. And install the requirements with `pip install -r requirements.txt`. You should adapt the first three lines of the `requirements.txt` file based on the installation command that the [PyTorch download page](https://pytorch.org/get-started/locally/) recommends for your system.
 7. Finally, start a Jupyter Notebook (run `jupyter notebook` from Powershell) from the root of the repo and hack away!
+
+# Code Internals
+
+Four objects need to be instantiated for running an experiment on any of the environments:
+
+1. **The Environment**
+2. **The Agent**
+   1. *Hyperparameters*
+   2. *DQN* 
+
+## Hyperparameters
+The default hyperparameters are defined in the HyperparameterConfig class in the file dqn_agent.py in the parent directory:
+
+```
+self.EPS_START = 1.0
+self.EPS_END = 0.01
+self.EPS_DECAY = 0.995
+
+self.BUFFER_SIZE = int(1e5)  # replay buffer size
+self.GAMMA = 0.99            # discount factor
+
+self.BATCH_SIZE = 64         # minibatch size
+self.LR = 5e-4               # learning rate 
+self.UPDATE_EVERY = 4        # how often to the current DQN should learn
+
+self.HARD_UPDATE = False     # to hard update or not (with double DQN, one should)
+self.DOUBLE_DQN = False      # to use double DQN or not
+self.TAU = 1e-3              # for soft update of target parameters
+self.OVERWRITE_EVERY = 128   # how often to clone the local DQN to the target DQN
+```
+
+## Agent
+The agent itself is defined in the `Agent` class in the file `dqn_agent.py` in the root folder. This agent has a number of tricks implemented in it including (each trick is followed by a list of the corresponding configs in the `HyperparameterConfig` class):
+1. *Soft Update* - instead of updating the target DQN after fixed intervals of steps, update it 'softly' with a weighted average of the target DQN and the current DQN.
+   1. The weight of the current DQN during the soft update is set with `TAU`. 
+   2. You can also choose not to do soft updates by setting `HARD_UPDATE` to `True`.
+   3. If you're doing hard updates, you'll need to set the interval of steps after which you want to perform the hard update with `OVERWRITE_STEPS`.
+2. *Double DQN* - The loss used when training the current DQN is the square of the following:
+![loss function](https://github.com/RishabhMalviya/dqn_experiments/blob/master/images_for_readme/loss_function.JPG)
+You will recognize the first two terms from the Bellman Equations. The Double DQN modifies the process of determining this quantity. The highest valued actions are determined using the current DQN (the parameters \theta), but then the actual action values are taken from the target DQN (parameters \theta^-).
+   1. You can switch on Double DQN by setting `DOUBLE_DQN` to `True`.
+
+## DQN
+The architecture of the DQNs that the agent internally instantiates are defined in each of the environments' folder in a file called `model.py`.

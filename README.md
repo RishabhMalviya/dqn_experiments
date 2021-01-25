@@ -1,8 +1,12 @@
 # Overview
-This repository contains an implementation of DQNs, with a number of additional tricks that have been propsed since then (see Biobliography). I have applied these DQNs to various OpenAI Gym environments.
+This repository contains various implementation of DQNs, with a number of additional tricks that have been propsed since then (see Biobliography). I have applied these DQNs to various OpenAI Gym environments.
 
 # Results
-These are the results (before and after GIFs) for the experiments that I have run. Corresponding entries to the OpenAI leaderboards are also linked to.
+These are the results (before and after GIFs) for the experiments that I have run. These GIFs have been generated using the `save_frames_as_gif` function in the `utils.py` file.
+
+Corresponding entries to the OpenAI leaderboards are also linked to.
+
+
 
 ## LunarLander-v2
 [Leaderboard Link](https://github.com/openai/gym/wiki/Leaderboard#lunarlander-v2)

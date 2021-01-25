@@ -181,7 +181,7 @@ class Agent:
         """
         if self.hp.DOUBLE_DQN:
             self.current_dqn.eval()
-            max_action_indices = self._current_dqn_forward_pass(state).detach().max(dim=1).indices.view(-1,1)
+            max_action_indices = self._current_dqn_forward_pass(next_states).detach().max(dim=1).indices.view(-1,1)
             next_states_max_action_values = self.target_dqn(next_states).gather(1,max_action_indices)
         else:
             next_states_max_action_values = self.target_dqn(next_states).detach().max(dim=1).values.view(-1,1)     

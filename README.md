@@ -5,11 +5,11 @@ This repository contains an implementation of DQNs, with a number of additional 
 These are the results (before and after GIFs) for the experiments that I have run. Corresponding entries to the OpenAI leaderboards are also linked to.
 
 ## LunarLander-v2
-### Random Agent:
-![lunarlander-random-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/random_agent.gif)
-### Trained Agent:
-![lunarlander-trained-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/trained_agent.gif)
-
+[Leaderboard Link](https://github.com/openai/gym/wiki/Leaderboard#lunarlander-v2)
+### Before Training:
+![lunarlander-random-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/random_agent.gif?raw=true)
+### After Training:
+![lunarlander-trained-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/trained_agent.gif?raw=true)
 
 # Local Setup
 This setup was done on a system with these specifications:
@@ -68,7 +68,7 @@ The agent itself is defined in the `Agent` class in the file `dqn_agent.py` in t
    2. You can also choose not to do soft updates by setting `HARD_UPDATE` to `True`.
    3. If you're doing hard updates, you'll need to set the interval of steps after which you want to perform the hard update with `OVERWRITE_STEPS`.
 2. *Double DQN* - The loss used when training the current DQN is the square of the following:
-![loss function](https://github.com/RishabhMalviya/dqn_experiments/blob/master/images_for_readme/loss_function.JPG)
+![loss function](https://imgur.com/bKrBclq.jpg)
 You will recognize the first two terms from the Bellman Equations. The Double DQN modifies the process of determining this quantity. The highest valued actions are determined using the current DQN (the parameters \theta), then the action-value itself is taken from the target DQN (parameters \theta^-).
    1. You can switch on Double DQN by setting `DOUBLE_DQN` to `True`.
 

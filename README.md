@@ -69,7 +69,6 @@ The agent itself is defined in the `Agent` class in the file `dqn_agent.py` in t
    3. If you're doing hard updates, you'll need to set the interval of steps after which you want to perform the hard update with `OVERWRITE_STEPS`.
 2. *Double DQN* - The loss used when training the current DQN is the square of the following:
 ![loss function](https://github.com/RishabhMalviya/dqn_experiments/blob/master/images_for_readme/loss_function.JPG)
-
 You will recognize the first two terms from the Bellman Equations. The Double DQN modifies the process of determining this quantity. The highest valued actions are determined using the current DQN (the parameters \theta), then the action-value itself is taken from the target DQN (parameters \theta^-).
    1. You can switch on Double DQN by setting `DOUBLE_DQN` to `True`.
 

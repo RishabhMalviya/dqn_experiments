@@ -37,19 +37,27 @@ class DuelingDQN(nn.Module):
         super().__init__()
         self.seed = torch.manual_seed(seed)
 
-        self.fc1 = nn.Linear(state_size, state_size*6)
-        self.fc2 = nn.Linear(state_size*6, state_size*4)
-        self.fc_state = nn.Linear(state_size*4, 1)
-        self.fc_advantages = nn.Linear(state_size*4, action_size)
+        self.fc1 = nn.Linear(state_size, state_size*8)
+        self.fc2 = nn.Linear(state_size*8, state_size*6)
+
+        self.fc_state_1 = nn.Linear(state_size*6, state_size*4)
+        self.fc_state_2 = nn.Linear(state_size*4, 1)
+
+        self.fc_advantages_1 = nn.Linear(state_size*6, state_size*4)
+        self.fc_advantages_2 = nn.Linear(state_size*4, action_size)
         
     def forward(self, state):
         # Common Part
         hidden1 = F.relu(self.fc1(state))
         hidden2 = F.relu(self.fc2(hidden1))
         
-        # State and Advantage Branches
-        state_value = F.relu(self.fc_state(hidden2))
-        advantage_values = F.relu(self.fc_advantages(hidden2))
+        # State Value Branch
+        state_value_hidden = F.relu(self.fc_state_1(hidden2))
+        state_value = F.relu(self.fc_state_2(state_value_hidden))
+
+        # Advantage Values Branch
+        advantage_values_hidden = F.relu(self.fc_advantages_1(hidden2))
+        advantage_values = F.relu(self.fc_advantages_2(advantage_values_hidden))
         
         # Recombine branches with equation (9) from the paper (https://arxiv.org/pdf/1511.06581.pdf)
         q_values = state_value + (advantage_values - advantage_values.mean(dim=1).view(-1,1))

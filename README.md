@@ -73,8 +73,15 @@ The agent itself is defined in the `Agent` class in the file `dqn_agent.py` in t
    3. If you're doing hard updates, you'll need to set the interval of steps after which you want to perform the hard update with `OVERWRITE_STEPS`.
 2. *Double DQN* - The loss used when training the current DQN is the square of the following:
 ![loss function](https://imgur.com/bKrBclq.jpg)
-You will recognize the first two terms from the Bellman Equations. The Double DQN modifies the process of determining this quantity. The highest valued actions are determined using the current DQN (the parameters \theta), then the action-value itself is taken from the target DQN (parameters \theta^-).
+You will recognize the first two terms from the Bellman Equations. The Double DQN modifies the process of determining this quantity. The highest valued actions are determined using the current DQN (the parameters \theta), but the action-value itself is calculated with the target DQN (parameters \theta^-).
    1. You can switch on Double DQN by setting `DOUBLE_DQN` to `True`.
 
 ## DQN
-The architecture of the DQNs that the agent internally instantiates are defined in each of the environments' folder in a file called `model.py`.
+The architectures for the DQNs that the agents use are defined in each of the environments' folder in a file called `model.py`. Many of these files will also contain an architecture for a *DuelingDQN*.
+
+
+# Bibilography
+
+1. [Human-Level Control Through Deep Reinforcement Learning](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf) - *Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, Martin Riedmiller, Andreas K. Fidjeland, Georg Ostrovski, Stig Petersen, Charles Beattie, Amir Sadik, Ioannis Antonoglou, Helen King, Dharshan Kumaran, Daan Wierstra, Shane Legg & Demis Hassabis*
+2. [Deep Reinforcement Learning with Double Q-learning](https://arxiv.org/pdf/1509.06461.pdf) - *Hado van Hasselt and Arthur Guez and David Silver*
+3. [Dueling Network Architectures for Deep Reinforcement Learning](https://arxiv.org/pdf/1511.06581.pdf) - *Ziyu Wang and Tom Schaul and Matteo Hessel and Hado van Hasselt and Marc Lanctot and Nando de Freitas*

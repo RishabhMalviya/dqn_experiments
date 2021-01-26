@@ -65,6 +65,37 @@ class HyperparameterConfig:
         self.TAU = 1e-3              # for soft update of target parameters
         self.OVERWRITE_EVERY = 128   # how often to clone the local DQN to the target DQN
         
+    def __str__(self):
+        return (
+            f'HYPERPARAMETERS:\n'
+            f'\n'
+            f'Epsilon (Exploration vs Exploitation):\n'
+            f'=========================================\n'           
+            f'Starting Epsilon: {self.EPS_START}\n'
+            f'Epsilon Lower Limit: {self.EPS_END}\n'
+            f'Epsilon Decay: {self.EPS_DECAY}\n'
+            f'\n'
+            f'Experience Replay and Reward Calculation:\n'
+            f'=============================================\n'
+            f'Experience Replay Memory Size: {self.BUFFER_SIZE}\n'
+            f'Gamma (Reward Calculation Discount): {self.GAMMA}\n'
+            f'\n'
+            f'DQN Training:\n'
+            f'=================\n'
+            f'Batch Size: {self.BATCH_SIZE}\n'
+            f'Learning Rate: {self.LR}\n'
+            f'Perform Optimization Every: {self.UPDATE_EVERY} steps\n'
+            f'\n'            
+            f'Target DQN Update:\n'
+            f'======================\n'
+            f'Double DQN: {self.DOUBLE_DQN}\n'
+            f'Hard Update: {self.HARD_UPDATE}\n'
+            f'Hard Update Every: {self.OVERWRITE_EVERY} steps\n'
+            f'Soft Update Rate: {self.TAU}\n'
+            f'\n'
+            f'\n'
+        )
+        
 class Agent:
     """Interacts with and learns from the environment."""
 

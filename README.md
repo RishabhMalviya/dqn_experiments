@@ -1,12 +1,11 @@
 # Overview
-This repository contains various implementation of DQNs, with a number of additional tricks that have been propsed since then (see Biobliography). I have applied these DQNs to various OpenAI Gym environments.
+This repository contains various implementation of DQNs, with a number of additional tricks that have been propsed since then (see [Bibliography](#bibilography)). I have applied these DQNs to various OpenAI Gym environments.
+
 
 # Results
-These are the results (before and after GIFs) for the experiments that I have run. These GIFs have been generated using the `save_frames_as_gif` function in the `utils.py` file.
+These are the results (before and after GIFs) for the experiments that I have run.
 
 Corresponding entries to the OpenAI leaderboards are also linked to.
-
-
 
 ## LunarLander-v2
 [Leaderboard Link](https://github.com/openai/gym/wiki/Leaderboard#lunarlander-v2)
@@ -14,6 +13,7 @@ Corresponding entries to the OpenAI leaderboards are also linked to.
 ![lunarlander-random-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/random_agent.gif?raw=true)
 ### After Training:
 ![lunarlander-trained-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/trained_agent.gif?raw=true)
+
 
 # Local Setup
 This setup was done on a system with these specifications:
@@ -35,50 +35,51 @@ Here are the exact steps:
 6. And install the requirements with `pip install -r requirements.txt`. You should adapt the first three lines of the `requirements.txt` file based on the installation command that the [PyTorch download page](https://pytorch.org/get-started/locally/) recommends for your system.
 7. Finally, start a Jupyter Notebook (run `jupyter notebook` from Powershell) from the root of the repo and hack away!
 
-# Code Internals
 
-Four objects need to be instantiated for running an experiment on any of the environments:
+# User Guide - Quickstart
 
-1. **The Environment**
-2. **The Agent**
-   1. *Hyperparameters*
-   2. *DQN* 
+## Basic Abstractions
 
-## Hyperparameters
-The default hyperparameters are defined in the HyperparameterConfig class in the file dqn_agent.py in the parent directory:
+At a minimum, the following four objects need to be instantiated for running an experiment on any of the environments:
 
+### 1. The Environment
+This will be an [OpenAI gym enviroment](https://gym.openai.com/docs/).
+
+Make sure you've gone through the steps in [Local Setup](#local-setup), if you want to use the [Box 2D environments](https://gym.openai.com/envs/#box2d).
+
+### 2. The Agent
+Depending on which agent you are using, you may have to instantiate additional 'sub-objects'. For example, the `DQNAgent` requires a `DQN` (`torch nn.Module`) and an optional `DQNHyperparameters` object during initialization.
+
+Further details can be found in the agents' [`README.md`](https://github.com/RishabhMalviya/dqn_experiments/tree/master/agents/README.md)
+
+### 3. Training Hyperparameters
+The hyperparameters used during training are defined in the `TrainingHyperparameters` class in the `train_and_visualize.py` file. These are the defaults:
 ```
 self.EPS_START = 1.0
 self.EPS_END = 0.01
 self.EPS_DECAY = 0.995
-
-self.BUFFER_SIZE = int(1e5)  # replay buffer size
-self.GAMMA = 0.99            # discount factor
-
-self.BATCH_SIZE = 64         # minibatch size
-self.LR = 5e-4               # learning rate 
-self.UPDATE_EVERY = 4        # how often to the current DQN should learn
-
-self.HARD_UPDATE = False     # to hard update or not (with double DQN, one should)
-self.DOUBLE_DQN = False      # to use double DQN or not
-self.TAU = 1e-3              # for soft update of target parameters
-self.OVERWRITE_EVERY = 128   # how often to clone the local DQN to the target DQN
 ```
 
-## Agent
-The agent itself is defined in the `Agent` class in the file `dqn_agent.py` in the root folder. This agent has a number of tricks implemented in it including (each trick is followed by a list of the corresponding configs in the `HyperparameterConfig` class):
-1. *Soft Update* - instead of updating the target DQN after fixed intervals of steps, update it 'softly' with a weighted average of the target DQN and the current DQN.
-   1. The weight of the current DQN during the soft update is set with `TAU`. 
-   2. You can also choose not to do soft updates by setting `HARD_UPDATE` to `True`.
-   3. If you're doing hard updates, you'll need to set the interval of steps after which you want to perform the hard update with `OVERWRITE_STEPS`.
-2. *Double DQN* - The loss used when training the current DQN is the square of the following:
-![loss function](https://imgur.com/bKrBclq.jpg)
-You will recognize the first two terms from the Bellman Equations. The Double DQN modifies the process of determining this quantity. The highest valued actions are determined using the current DQN (the parameters \theta), but the action-value itself is calculated with the target DQN (parameters \theta^-).
-   1. You can switch on Double DQN by setting `DOUBLE_DQN` to `True`.
+## Training
+The agent can then be set free to interact with environment and learn using the `train_agent` function from the `train_and_visualize.py` file. This function takes an argument called `completion_criteria`, which is supposed to be a function that takes as an argument a list of the scores from the last 100 episodes (latest first), and returns True or False. For example:
+```
+train_agent(   
+    env=env,
+    agent=agent,
+    n_episodes=2000,
+    max_t=1500,
+    completion_criteria=lambda scores_window: np.mean(scores_window) >= 200.0
+)
+```
 
-## DQN
-The architectures for the DQNs that the agents use are defined in each of the environments' folder in a file called `model.py`. Many of these files will also contain an architecture for a *DuelingDQN*.
+For examples of this in action, go into the folders that are named with an environment name, for example, [`lunar-lander`](https://github.com/RishabhMalviya/dqn_experiments/tree/master/lunar-lander) and explore the Jupyter Notebooks therein. 
 
+Those codes were the ones used to generate the GIFs you saw at the beginning of this README.md
+
+## Visualizing
+You can visualize the trained agent (or a randomly behaving agent) and save GIFs of the interaction with the functions `save_trained_agent_gif` (or `save_random_agent_gif`) in `train_and_visualize.py`.
+
+And that's it! If you face any problems, or have any questions. please add an Issue to the repo.
 
 # Bibilography
 

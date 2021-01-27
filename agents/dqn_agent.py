@@ -1,10 +1,12 @@
-import numpy as np
 import random
 from collections import namedtuple, deque
 
+import numpy as np
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
+
+from agents import BaseAgent
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -47,12 +49,8 @@ class ReplayBuffer:
         """Return the current size of internal memory."""
         return len(self.memory)
 
-class HyperparameterConfig:
-    def __init__(self):
-        self.EPS_START = 1.0
-        self.EPS_END = 0.01
-        self.EPS_DECAY = 0.995
-        
+class DQNHyperparameters:
+    def __init__(self):        
         self.BUFFER_SIZE = int(1e5)  # replay buffer size
         self.GAMMA = 0.99            # discount factor
 
@@ -67,13 +65,7 @@ class HyperparameterConfig:
         
     def __str__(self):
         return (
-            f'HYPERPARAMETERS:\n'
-            f'\n'
-            f'Epsilon (Exploration vs Exploitation):\n'
-            f'=========================================\n'           
-            f'Starting Epsilon: {self.EPS_START}\n'
-            f'Epsilon Lower Limit: {self.EPS_END}\n'
-            f'Epsilon Decay: {self.EPS_DECAY}\n'
+            f'DQN AGENT HYPERPARAMETERS:\n'
             f'\n'
             f'Experience Replay and Reward Calculation:\n'
             f'=============================================\n'
@@ -96,10 +88,10 @@ class HyperparameterConfig:
             f'\n'
         )
         
-class Agent:
-    """Interacts with and learns from the environment."""
+class DQNAgent(BaseAgent):
+    """Interacts with and learns from the environment using DQNs."""
 
-    def __init__(self, state_size, action_size, seed, QNetwork, hyperparameters):
+    def __init__(self, state_size, action_size, seed, DQN, dqn_save_path='./trained_dqn.pth', hyperparameters=DQNHyperparameters()):
         """Initialize an Agent object.
         
         Params
@@ -110,16 +102,17 @@ class Agent:
             QNetwork (nn.Module): the class that defines the DQN architecture
             hyperparameters (HyperparameterConfig): hyperparameters
         """
-        self.state_size = state_size
-        self.action_size = action_size
-        self.seed = random.seed(seed)
-
+        super().__init__(state_size, action_size, seed)
+        
+        # DQN model save path
+        self.dqn_save_path='./trained_dqn.pth'
+        
         # Hyperparameters
         self.hp = hyperparameters
 
         # Q-Networks
-        self.current_dqn = QNetwork(state_size, action_size, seed).to(device)        
-        self.target_dqn = QNetwork(state_size, action_size, seed).to(device)
+        self.current_dqn = DQN(state_size, action_size, seed).to(device)        
+        self.target_dqn = DQN(state_size, action_size, seed).to(device)
         
         # Optimizer for current DQN learning
         self.optimizer = optim.Adam(params=self.current_dqn.parameters(), lr=self.hp.LR)
@@ -127,25 +120,8 @@ class Agent:
         # Replay memory
         self.memory = ReplayBuffer(self.hp.BUFFER_SIZE, self.hp.BATCH_SIZE, seed)
         
-        # Initialize the step count (to keep track of when to learn (current DQN) and update (target DQN))
+        # Initialize the step count (to keep track of when to learn (current DQN) and when to update (target DQN))
         self.t_step = 0
-    
-    def _current_dqn_forward_pass(self, states):
-        """Get the action values for the given state by performing a forward pass 
-        through the current DQN with gradient calculations turend off.
-
-        Args:
-            states (torch.Tensor): May be a single state vector, or a minibatch
-            
-        Returns:
-            torch.Tensor: the action-values, according to the current DQN
-        """
-        self.current_dqn.eval()
-        with torch.no_grad():
-            action_values = self.current_dqn(states)
-        self.current_dqn.train()
-        
-        return action_values
     
     def act(self, state, eps=0.):
         """Determine the action based on the given state. This action choice is then sent to the environment, 
@@ -186,8 +162,29 @@ class Agent:
         self.t_step += 1
         if self.t_step % self.hp.UPDATE_EVERY == 0 and len(self.memory) > self.hp.BATCH_SIZE:
             experiences = self.memory.sample()
-            self.learn(experiences)
+            self._learn(experiences)
         
+    def end(self):
+        torch.save(self.current_dqn.state_dict(), self.dqn_save_path)
+
+        
+    def _current_dqn_forward_pass(self, states):
+        """Get the action values for the given state by performing a forward pass 
+        through the current DQN with gradient calculations turend off.
+
+        Args:
+            states (torch.Tensor): May be a single state vector, or a minibatch
+            
+        Returns:
+            torch.Tensor: the action-values, according to the current DQN
+        """
+        self.current_dqn.eval()
+        with torch.no_grad():
+            action_values = self.current_dqn(states)
+        self.current_dqn.train()
+        
+        return action_values
+
     def _hard_update(self):
         """Overwrite the target DQN parameters with the current DQN's parameter values.
         """
@@ -219,9 +216,9 @@ class Agent:
         
         return next_states_max_action_values
             
-    def learn(self, experiences):
+    def _learn(self, experiences):
         """Train the current DQN using the given batch of experience tuples.
-        Also updates the target DQN according to the choen policy.
+        Also updates the target DQN according to the chosen policy.
 
         Args:
             experiences (Tuple[torch.Tensor]): tuple of (s, a, r, s', done) tuples 

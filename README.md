@@ -5,14 +5,18 @@ This repository contains various implementation of DQNs, with a number of additi
 # Results
 These are the results (before and after GIFs) for the experiments that I have run.
 
-Corresponding entries to the OpenAI leaderboards are also linked to.
-
 ## LunarLander-v2
-[Leaderboard Link](https://github.com/openai/gym/wiki/Leaderboard#lunarlander-v2)
 ### Before Training:
 ![lunarlander-random-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/random_agent.gif?raw=true)
 ### After Training:
 ![lunarlander-trained-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/trained_agent.gif?raw=true)
+
+## CartPole-v1
+### Before Training:
+![cartpole-random-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/cart-pole/videos/random_agent.gif?raw=true)
+### After Training:
+![cartpole-trained-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/cart-pole/videos/trained_agent.gif?raw=true)
+
 
 
 # Local Setup

@@ -4,13 +4,6 @@ import torch.nn.functional as F
 
 class SimpleDQN(nn.Module):
     def __init__(self, state_size, action_size, seed):
-        """Initialize parameters and build model.
-        Params
-        ======
-            state_size (int): Dimension of each state
-            action_size (int): Dimension of each action
-            seed (int): Random seed
-        """
         super().__init__()
         self.seed = torch.manual_seed(seed)
 
@@ -27,13 +20,6 @@ class SimpleDQN(nn.Module):
     
 class DuelingDQN(nn.Module):
     def __init__(self, state_size, action_size, seed):
-        """Initialize parameters and build model.
-        Params
-        ======
-            state_size (int): Dimension of each state
-            action_size (int): Dimension of each action
-            seed (int): Random seed
-        """
         super().__init__()
         self.seed = torch.manual_seed(seed)
 

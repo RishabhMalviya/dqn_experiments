@@ -1,8 +1,7 @@
 # Results
-## Random Agent:
-![lunarlander-random-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/random_agent.gif?raw=true)
-## Trained Agent:
-![lunarlander-trained-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/trained_agent.gif?raw=true)
+|*Before Training*|*After Training*|
+|--------|--------|
+|![lunarlander-random-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/random_agent.gif?raw=true)|![lunarlander-trained-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/lunar-lander/videos/trained_agent.gif?raw=true)|
 
 # DQN Approach
 While doing soft updates, increasing the rate of the update from 1e-3 to 1e-2 drastically sped up the convergence of the algorithm.

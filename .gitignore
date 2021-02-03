@@ -3,3 +3,4 @@ venv/
 __pycache__/
 .ipynb_checkpoints/
 debug.log
+banana-collector/Banana_Windows_x86_64

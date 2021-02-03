@@ -6,3 +6,4 @@ Pillow==7.2.0
 matplotlib==3.3.3
 jupyter==1.0.0
 gym==0.18.0
+imageio==2.9.0

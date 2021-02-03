@@ -5,6 +5,11 @@ This repository contains various implementation of DQNs, with a number of additi
 # Results
 These are the results (before and after GIFs) for the experiments that I have run.
 
+| **Banana Collector** (DQN) ||
+|--------|--------|
+|*Before Training*|*After Training*|
+|![banana-collector-random-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/banana-collector/videos/random_agent.gif?raw=true)|![banana-collector-trained-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/banana-collector/videos/trained_agent.gif?raw=true)|
+
 | **Lunar Lander v2** (DQN) ||
 |--------|--------|
 |*Before Training*|*After Training*|

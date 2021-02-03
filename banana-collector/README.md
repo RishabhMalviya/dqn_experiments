@@ -1,9 +1,15 @@
+# Results
+
+|*Before Training*|*After Training*|
+|--------|--------|
+|![banana-collector-random-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/banana-collector/videos/random_agent.gif?raw=true)|![banana-collector-trained-agent](https://github.com/RishabhMalviya/dqn_experiments/blob/master/banana-collector/videos/trained_agent.gif?raw=true)|
+
 # Setup
 This environment is not an OpenAI Gym environment, but a [Unity ML Agents](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#banana-collector) environment, taken from the [Udacity Deep Reinforcement Learning Nanodegree](https://www.udacity.com/course/deep-reinforcement-learning-nanodegree--nd893) program. 
 
-Navigate to the folder `unity-ml-agents-setup` from the root of the repository and run `pip install .` if you haven't already. This will setup a package called `unityagents`, built as a wrapper around the Unity ML Agents package by the Udacity team.
+If you haven't already, navigate to the folder `unity-ml-agents-setup` from the root of the repository and run `pip install .`. This will setup a package called `unityagents`, built as a wrapper around the Unity ML Agents package by the Udacity team.
 
-To run the code in the Jupyter Notebook, you will have to first download one of the pre-built environment from below (based on your operating system) and then extract and place the folder in this folder
+To run the code in the Jupyter Notebook, you will have to first download one of the pre-built environment from below (based on your operating system), then extract the zip and place it in this folder:
 - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux.zip)
 - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana.app.zip)
 - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86.zip)

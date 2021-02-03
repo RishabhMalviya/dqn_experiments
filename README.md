@@ -21,7 +21,7 @@ This setup was done on a system with these specifications:
 1. **OS**: Windows 10
 2. **CUDA Toolkit Version**: 11.2 (Download it from [here](https://developer.nvidia.com/Cuda-downloads))
 3. **Python Version**: Python 3.6.8 (You can download the executable installer for Windows 10 from [here](https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64.exe))
-But I've kept things very simple and put in lots of links, so as to make it easier for you to figure out the corresponding steps for Linux.
+4. **Unity ML Agents (Udacity Version)**: A managed build of Unity ML Agents framework, which can be found in the folder `unity-ml-agents-setup`; you just have to go into the folder and run `pip install .`. This only needs to be installed for the environment `banana-collector`.
 
 Here are the exact steps:
 1. Clone this repository with (use [Git Bash for Windows](https://gitforwindows.org/)) `git clone https://github.com/RishabhMalviya/dqn-experiments.git`.
@@ -34,7 +34,8 @@ Here are the exact steps:
 4. Now, activate the venv by running `./venv/Scripts/activate` in Powershell.
 5. Upgrade pip with `pip install -U pip`.
 6. And install the requirements with `pip install -r requirements.txt`. You should adapt the first three lines of the `requirements.txt` file based on the installation command that the [PyTorch download page](https://pytorch.org/get-started/locally/) recommends for your system.
-7. Finally, start a Jupyter Notebook (run `jupyter notebook` from Powershell) from the root of the repo and hack away!
+7. Run `cd ./unity-ml-agents-setup` and `pip install .` also if you plan on working with Unity ML Agents or running the notebook in `banana-collector`. 
+8. Finally, start a Jupyter Notebook (run `jupyter notebook` from Powershell) from the root of the repo and hack away!
 
 
 # User Guide - Quickstart

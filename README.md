@@ -1,5 +1,11 @@
 # Overview
-This repository contains various implementation of DQNs, with a number of additional tricks that have been propsed since then. I have applied these DQNs to various OpenAI Gym environments, and one Unity ML Agents environment.
+This repository contains various implementation of DQNs, with a number of additional tricks that have been propsed since then: 
+
+1. [Human-Level Control Through Deep Reinforcement Learning](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf) - *Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, Martin Riedmiller, Andreas K. Fidjeland, Georg Ostrovski, Stig Petersen, Charles Beattie, Amir Sadik, Ioannis Antonoglou, Helen King, Dharshan Kumaran, Daan Wierstra, Shane Legg & Demis Hassabis*
+2. [Deep Reinforcement Learning with Double Q-learning](https://arxiv.org/pdf/1509.06461.pdf) - *Hado van Hasselt and Arthur Guez and David Silver*
+3. [Dueling Network Architectures for Deep Reinforcement Learning](https://arxiv.org/pdf/1511.06581.pdf) - *Ziyu Wang and Tom Schaul and Matteo Hessel and Hado van Hasselt and Marc Lanctot and Nando de Freitas*
+
+I have applied these DQNs to various OpenAI Gym environments, and one Unity ML Agents environment.
 
 
 # Results
@@ -87,9 +93,3 @@ You can visualize the trained agent (or a randomly behaving agent) and save GIFs
 For the equivalent in Unit ML Agents, you can use the functions `run_random_agent` and `run_trained_agent` from the `train_and_visualize_unity.py` file. This won;t save a GIF of the interaction, but it will run it in the Unity window. You'll have to then manually record the interaction from your screen with a software like [ScreenToGIF](https://github.com/NickeManarin/ScreenToGif).
 
 And that's it! If you face any problems, or have any questions. please add an Issue to the repo.
-
-# Bibilography
-
-1. [Human-Level Control Through Deep Reinforcement Learning](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf) - *Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei A. Rusu, Joel Veness, Marc G. Bellemare, Alex Graves, Martin Riedmiller, Andreas K. Fidjeland, Georg Ostrovski, Stig Petersen, Charles Beattie, Amir Sadik, Ioannis Antonoglou, Helen King, Dharshan Kumaran, Daan Wierstra, Shane Legg & Demis Hassabis*
-2. [Deep Reinforcement Learning with Double Q-learning](https://arxiv.org/pdf/1509.06461.pdf) - *Hado van Hasselt and Arthur Guez and David Silver*
-3. [Dueling Network Architectures for Deep Reinforcement Learning](https://arxiv.org/pdf/1511.06581.pdf) - *Ziyu Wang and Tom Schaul and Matteo Hessel and Hado van Hasselt and Marc Lanctot and Nando de Freitas*

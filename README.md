@@ -1,5 +1,5 @@
 # Overview
-This repository contains various implementation of DQNs, with a number of additional tricks that have been propsed since then (see [Bibliography](#bibilography)). I have applied these DQNs to various OpenAI Gym environments.
+This repository contains various implementation of DQNs, with a number of additional tricks that have been propsed since then. I have applied these DQNs to various OpenAI Gym environments, and one Unity ML Agents environment.
 
 
 # Results
@@ -50,17 +50,17 @@ Here are the exact steps:
 At a minimum, the following four objects need to be instantiated for running an experiment on any of the environments:
 
 ### 1. The Environment
-This will be an [OpenAI gym enviroment](https://gym.openai.com/docs/).
+This will be an [OpenAI gym enviroment](https://gym.openai.com/docs/), or a Unity ML Agents environment, if you're running the `banana-collector` experiment.
 
-Make sure you've gone through the steps in [Local Setup](#local-setup), if you want to use the [Box 2D environments](https://gym.openai.com/envs/#box2d).
+Make sure you've gone through the steps in [Local Setup](#local-setup), if you want to use the [Box 2D OpenAI gym environments](https://gym.openai.com/envs/#box2d).
 
 ### 2. The Agent
 Depending on which agent you are using, you may have to instantiate additional 'sub-objects'. For example, the `DQNAgent` requires a `DQN` (`torch nn.Module`) and an optional `DQNHyperparameters` object during initialization.
 
-Further details can be found in the agents' [`README.md`](https://github.com/RishabhMalviya/dqn_experiments/tree/master/agents/README.md)
+Further details can be found in the [agents' `README.md`](https://github.com/RishabhMalviya/dqn_experiments/tree/master/agents/README.md)
 
 ### 3. Training Hyperparameters
-The hyperparameters used during training are defined in the `TrainingHyperparameters` class in the `train_and_visualize.py` file. These are the defaults:
+The hyperparameters used during training are defined in the `TrainingHyperparameters` class in the `train_and_visualize.py` file (and `train_and_visualize_unity.py` file). These are the defaults:
 ```
 self.EPS_START = 1.0
 self.EPS_END = 0.01
@@ -68,7 +68,7 @@ self.EPS_DECAY = 0.995
 ```
 
 ## Training
-The agent can then be set free to interact with environment and learn using the `train_agent` function from the `train_and_visualize.py` file. This function takes an argument called `completion_criteria`, which is supposed to be a function that takes as an argument a list of the scores from the last 100 episodes (latest first), and returns True or False. For example:
+The agent can then be set free to interact with environment and learn using the `train_agent` function from the `train_and_visualize.py` file (and `train_and_visualize_unity.py` file). This function takes an argument called `completion_criteria`, which is supposed to be a function that takes as an argument a list of the scores from the last 100 episodes (latest first), and returns True or False. For example:
 ```
 train_agent(   
     env=env,
@@ -79,12 +79,12 @@ train_agent(
 )
 ```
 
-For examples of this in action, go into the folders that are named with an environment name, for example, [`lunar-lander`](https://github.com/RishabhMalviya/dqn_experiments/tree/master/lunar-lander) and explore the Jupyter Notebooks therein. 
-
-Those codes were the ones used to generate the GIFs you saw at the beginning of this README.md
+For examples of this in action, go into the folders that are named with an environment name, for example, [`lunar-lander`](https://github.com/RishabhMalviya/dqn_experiments/tree/master/lunar-lander) and explore the Jupyter Notebooks therein.
 
 ## Visualizing
-You can visualize the trained agent (or a randomly behaving agent) and save GIFs of the interaction with the functions `save_trained_agent_gif` (or `save_random_agent_gif`) in `train_and_visualize.py`.
+You can visualize the trained agent (or a randomly behaving agent) and save GIFs of the interaction with the functions `save_trained_agent_gif` (or `save_random_agent_gif`) in `train_and_visualize.py`. Note that this only works for OpenAI Gym environments.
+
+For the equivalent in Unit ML Agents, you can use the functions `run_random_agent` and `run_trained_agent` from the `train_and_visualize_unity.py` file. This won;t save a GIF of the interaction, but it will run it in the Unity window. You'll have to then manually record the interaction from your screen with a software like [ScreenToGIF](https://github.com/NickeManarin/ScreenToGif).
 
 And that's it! If you face any problems, or have any questions. please add an Issue to the repo.
 
